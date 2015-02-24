@@ -9,7 +9,7 @@ import (
 func main() {
 	flag.Parse()
 	if printVersion {
-		fmt.Printf("confd %s\n", Version)
+		fmt.Printf("registerd %s\n", Version)
 		os.Exit(0)
 	}
 }
