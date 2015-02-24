@@ -1,10 +1,11 @@
 package main
 
 import (
-	"errors"
 	"flag"
 	"io/ioutil"
 	"os"
+	"path/filepath"
+	"strings"
 
 	"github.com/BurntSushi/toml"
 	"github.com/kelseyhightower/confd/backends"
@@ -22,6 +23,7 @@ var (
 	confdir           string
 	config            Config // holds the global registerd config.
 	debug             bool
+	keepStageFile     bool
 	nodes             Nodes
 	noop              bool
 	onetime           bool
@@ -106,9 +108,9 @@ func initConfig() error {
 	processFlags()
 
 	// Configure logging
-	log.SetQuiet(Config.Quiet)
-	log.SetVerbose(Config.Verbose)
-	log.SetDebug(Config.Debug)
+	log.SetQuiet(config.Quiet)
+	log.SetVerbose(config.Verbose)
+	log.SetDebug(config.Debug)
 
 	// Update BackendNodes
 	if len(config.BackendNodes) == 0 {
