@@ -1,6 +1,8 @@
 package main
 
-import ()
+import (
+	"flag"
+)
 
 var (
 	configFile        = ""
@@ -33,4 +35,19 @@ type Config struct {
 	Scheme       string   `toml:"scheme"`
 	Verbose      bool     `toml:"verbose"`
 	Watch        bool     `toml:"watch"`
+}
+
+func init() {
+	flag.StringVar(&clientCaKeys, "client-ca-keys", "", "client ca keys")
+	flag.StringVar(&clientCert, "client-cert", "", "the client cert")
+	flag.StringVar(&clientKey, "client-key", "", "the client key")
+	flag.StringVar(&confdir, "confdir", "/etc/confd", "confd conf directory")
+	flag.StringVar(&configFile, "config-file", "", "the confd config file")
+	flag.BoolVar(&debug, "debug", false, "enable debug logging")
+	flag.Var(&nodes, "node", "list of backend nodes")
+	flag.BoolVar(&printVersion, "version", false, "print version and exit")
+	flag.BoolVar(&quiet, "quiet", false, "enable quiet logging")
+	flag.StringVar(&scheme, "scheme", "http", "the backend URI scheme (http or https)")
+	flag.BoolVar(&verbose, "verbose", false, "enable verbose logging")
+	flag.BoolVar(&watch, "watch", false, "enable watch support")
 }
