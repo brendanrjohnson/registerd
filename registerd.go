@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"os"
 
+	"github.com/brendanrjohnson/registerd/backends"
 	"github.com/kelseyhightower/confd/log"
 )
 
@@ -18,4 +19,9 @@ func main() {
 		log.Fatal(err.Error())
 	}
 	log.Notice("Starting registerd")
+	storeClient, err := backends.New(backendsConfig)
+	if err != nil {
+		log.Fatal(err.Error())
+	}
+	templateConfig.StoreClient = storeClient
 }

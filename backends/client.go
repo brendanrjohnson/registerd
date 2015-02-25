@@ -4,10 +4,10 @@ import (
 	"errors"
 	"strings"
 
-	"github.com/brendanrjohnson/confd/backends/consul"
-	"github.com/brendanrjohnson/confd/backends/env"
-	"github.com/brendanrjohnson/confd/backends/etcd"
-	"github.com/brendanrjohnson/confd/backends/zookeeper"
+	"github.com/brendanrjohnson/registerd/backends/consul"
+	"github.com/brendanrjohnson/registerd/backends/env"
+	"github.com/brendanrjohnson/registerd/backends/etcd"
+	"github.com/brendanrjohnson/registerd/backends/zookeeper"
 	"github.com/kelseyhightower/confd/log"
 )
 
