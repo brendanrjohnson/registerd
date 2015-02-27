@@ -9,35 +9,36 @@ import (
 
 	"github.com/BurntSushi/toml"
 	"github.com/brendanrjohnson/registerd/backends"
+	"github.com/brendanrjohnson/registerd/resource/template"
+
 	"github.com/kelseyhightower/confd/log"
-	"github.com/kelseyhightower/confd/resource/template"
 )
 
 var (
-	configFile        = ""
-	defaultConfigFile = "/etc/registerd/registerd.toml"
-	backend           string
-	clientCaKeys      string
-	clientCert        string
-	clientKey         string
-	confdir           string
-	config            Config // holds the global registerd config.
-	debug             bool
-	keepStageFile     bool
-	nodes             Nodes
-	noop              bool
-	onetime           bool
-	prefix            string
-	printVersion      bool
-	quiet             bool
-	scheme            string
-	templateConfig    template.Config
-	backendsConfig    backends.Config
-	verbose           bool
-	watch             bool
+	configFile          = ""
+	defaultConfigFile   = "/etc/registerd/registerd.toml"
+	backend             string
+	clientCaKeys        string
+	clientCert          string
+	clientKey           string
+	confdir             string
+	config              Config // holds the global registerd config.
+	debug               bool
+	keepStageFile       bool
+	nodes               Nodes
+	noop                bool
+	onetime             bool
+	prefix              string
+	printVersion        bool
+	quiet               bool
+	scheme              string
+	ConfigurationConfig Configuration.Config
+	backendsConfig      backends.Config
+	verbose             bool
+	watch               bool
 )
 
-// A Config structure is used to configure confd.
+// A Config structure is used to configure registerd.
 type Config struct {
 	Backend      string   `toml:"backend"`
 	BackendNodes []string `toml:"nodes"`
@@ -59,8 +60,8 @@ func init() {
 	flag.StringVar(&clientCaKeys, "client-ca-keys", "", "client ca keys")
 	flag.StringVar(&clientCert, "client-cert", "", "the client cert")
 	flag.StringVar(&clientKey, "client-key", "", "the client key")
-	flag.StringVar(&confdir, "confdir", "/etc/confd", "confd conf directory")
-	flag.StringVar(&configFile, "config-file", "", "the confd config file")
+	flag.StringVar(&confdir, "confdir", "/etc/registerd", "registerd conf directory")
+	flag.StringVar(&configFile, "config-file", "", "the registerd config file")
 	flag.BoolVar(&debug, "debug", false, "enable debug logging")
 	flag.BoolVar(&keepStageFile, "keep-stage-file", false, "keep staged files")
 	flag.Var(&nodes, "node", "list of backend nodes")
@@ -74,8 +75,8 @@ func init() {
 	flag.BoolVar(&watch, "watch", false, "enable watch support")
 }
 
-// initConfig initializes the confd configuration by first setting defaults,
-// then overriding setting from the confd config file, and finally overriding
+// initConfig initializes the registerd configuration by first setting defaults,
+// then overriding setting from the registerd config file, and finally overriding
 // settings from flags set on the command line.
 // It returns an error if any.
 func initConfig() error {
