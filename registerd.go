@@ -24,4 +24,7 @@ func main() {
 		log.Fatal(err.Error())
 	}
 	templateConfig.StoreClient = storeClient
+	if onetime {
+		if err := templ
+	}
 }

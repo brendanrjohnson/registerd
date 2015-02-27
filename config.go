@@ -89,7 +89,6 @@ func initConfig() error {
 		ConfDir: "/etc/registerd",
 		Scheme:  "http",
 	}
-
 	// Update config from the TOML configuration file
 	if configFile == "" {
 		log.Warning("Skipping registerd config file.")
